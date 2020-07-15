@@ -10,7 +10,9 @@
 
 init(Type, State) ->
     rebar_api:warn("rebar3_static_resource:init(): Type=~p", [Type]),
-    rebar_git_resource:init(to_normal_type(Type), State).
+    Internal = rebar_git_resource:init(to_internal_type(Type), State),
+    Resource = rebar_resource_v2:new(Type, ?MODULE, #{internal => Internal}),
+    {ok, Resource}.
 
 lock(AppInfo, ResourceState) ->
     rebar_git_resource:lock(AppInfo, ResourceState).
@@ -39,7 +41,7 @@ make_vsn(AppInfo, ResourceState) ->
 to_normal_resource({static, Repo, Vsn}) ->
     {git, Repo, Vsn}.
 
-to_normal_type(static) ->
+to_internal_type(static) ->
     git.
 
 write_app_file(Dir, {_, Repo, _}) ->
