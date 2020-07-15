@@ -10,8 +10,7 @@
 
 init(Type, State) ->
     rebar_api:warn("rebar3_static_resource:init(): Type=~p", [Type]),
-    Internal = rebar_git_resource:init(to_internal_type(Type), State),
-    Resource = rebar_resource_v2:new(Type, ?MODULE, #{internal => Internal}),
+    Resource = rebar_resource_v2:new(Type, ?MODULE, #{}),
     {ok, Resource}.
 
 lock(AppInfo, ResourceState) ->
@@ -20,7 +19,6 @@ lock(AppInfo, ResourceState) ->
 download(Dir, AppInfo, ResourceState, State) ->
     %% rebar_api:warn("rebar3_static_resource:download(): ResourceState=~p", [ResourceState]),
     %% rebar_api:warn("rebar3_static_resource:download(): AppInfo=~p", [AppInfo]),
-    %% #{internal := Internal} = ResourceState,
     case rebar_git_resource:download(Dir, to_internal_app_info(AppInfo), ResourceState, State) of
         {error, Reason} ->
             {error, Reason};
@@ -43,12 +41,10 @@ to_internal_app_info(AppInfo) ->
     {static, Url, Ref} = rebar_app_info:source(AppInfo),
     rebar_app_info:source(AppInfo, {git, Url, Ref}).
 
-to_internal_type(static) ->
-    git.
-
-write_app_file(Dir, {_, Repo, _}) ->
+write_app_file(Dir, AppInfo) ->
     rebar_api:warn("rebar3_static_resource:write_app_file(): Dir=~p", [Dir]),
-    AppName = lists:flatten(string:replace(filename:basename(Repo, ".git"), "-", "_", all)),
+    AppName =  rebar_app_info:name(AppInfo),
+    rebar_api:warn("rebar3_static_resource:write_app_file(): AppName=~p", [AppName]),
     AppFilePath = filename:join([Dir, "src", AppName ++ ".app.src"]),
     rebar_api:warn("rebar3_static_resource:write_app_file(): AppFilePath=~p", [AppFilePath]),
     ok = filelib:ensure_dir(AppFilePath),
