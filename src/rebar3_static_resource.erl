@@ -16,6 +16,8 @@ download(Dir, Source, State) ->
         {error, Reason} ->
             {error, Reason};
         ok ->
+            write_app_file(Dir);
+        {ok, _} ->
             write_app_file(Dir)
     end.
 
