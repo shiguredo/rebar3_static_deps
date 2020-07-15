@@ -1,6 +1,6 @@
 -module(rebar3_static_resource).
 
--behaviour(rebar_resource).
+-behaviour(rebar_resource_v2).
 
 -export([lock/2,
          download/3,
@@ -44,7 +44,7 @@ write_app_file(Dir, {_, Repo, _}) ->
                 "   {vsn, \"0.1.0\"},\n",
                 "   {registered, []},\n",
                 "   {applications, [kernel, stdlib]},\n",
-                "   {modules, []}]}.">>,
+                "   {modules, []}]}.\n">>,
     rebar_api:warn("AppFile content=~p", [Content]),
     ok = file:write_file(AppFilePath, Content),
     ok.
