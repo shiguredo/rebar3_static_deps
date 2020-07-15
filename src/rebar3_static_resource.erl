@@ -16,9 +16,9 @@ download(Dir, Source, State) ->
         {error, Reason} ->
             {error, Reason};
         ok ->
-            write_app_file(Dir);
+            write_app_file(Dir, Source);
         {ok, _} ->
-            write_app_file(Dir)
+            write_app_file(Dir, Source)
     end.
 
 
@@ -33,7 +33,15 @@ make_vsn(Dir) ->
 to_normal_resource({static, Repo, Vsn}) ->
     {git, Repo, Vsn}.
 
-write_app_file(Dir) ->
+write_app_file(Dir, {_, Repo, _}) ->
     rebar_api:warn("Dir=~p", [Dir]),
+    AppName = lists:flatten(string:replace(filename:basename(Repo, ".git"), "-", "_", all)),
+    AppFilePath = filename:join([Dir, "src", AppName ++ ".app.src"]),
+    ok = filelib:ensure_dir(AppFilePath),
+    ok = file:write_file(AppFilePath, <<"{application, ", AppName, ",\n",
+                                        "[{description, \"fake static app\"},\n",
+                                        "{vsn, \"0.1.0\"},\n",
+                                        "{registered, []},\n",
+                                        "{applications, [kernel, stdlib]},\n",
+                                        "{modules, []}">>),
     ok.
-    %% AppFilePath = filename:join([Dir, "src", "").
