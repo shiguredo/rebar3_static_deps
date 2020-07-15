@@ -17,9 +17,10 @@ init(Type, State) ->
 lock(AppInfo, ResourceState) ->
     rebar_git_resource:lock(AppInfo, ResourceState).
 
-download(Dir, AppInfo, #{internal := Internal} = _ResourceState, State) ->
+download(Dir, AppInfo, ResourceState, State) ->
+    rebar_api:warn("rebar3_static_resource:download(): ResourceState=~p", [ResourceState]),
     rebar_api:warn("rebar3_static_resource:download(): AppInfo=~p", [AppInfo]),
-    %% rebar_api:warn("rebar3_static_resource:download(): ResourceState=~p", [ResourceState]),
+    #{internal := Internal} = ResourceState,
     case rebar_git_resource:download(Dir, AppInfo, Internal, State) of
         {error, Reason} ->
             {error, Reason};
