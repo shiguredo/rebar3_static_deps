@@ -21,7 +21,7 @@ download(Dir, AppInfo, ResourceState, State) ->
     %% rebar_api:warn("rebar3_static_resource:download(): ResourceState=~p", [ResourceState]),
     %% rebar_api:warn("rebar3_static_resource:download(): AppInfo=~p", [AppInfo]),
     %% #{internal := Internal} = ResourceState,
-    case rebar_git_resource:download(Dir, AppInfo, ResourceState, State) of
+    case rebar_git_resource:download(Dir, to_internal_app_info(AppInfo), ResourceState, State) of
         {error, Reason} ->
             {error, Reason};
         ok ->
@@ -32,15 +32,16 @@ download(Dir, AppInfo, ResourceState, State) ->
 
 
 needs_update(AppInfo, ResourceState) ->
-    rebar_git_resource:make_vsn(AppInfo, to_normal_resource(ResourceState)).
+    rebar_git_resource:make_vsn(to_internal_app_info(AppInfo), ResourceState).
 
 make_vsn(AppInfo, ResourceState) ->
-    rebar_git_resource:make_vsn(AppInfo, ResourceState).
+    rebar_git_resource:make_vsn(to_internal_app_info(AppInfo), ResourceState).
 
 %% private
 
-to_normal_resource({static, Repo, Vsn}) ->
-    {git, Repo, Vsn}.
+to_internal_app_info(AppInfo) ->
+    {static, Url, Ref} = rebar_app_info:source(AppInfo),
+    rebar_app_info:source(AppInfo, {git, Url, Ref}).
 
 to_internal_type(static) ->
     git.
