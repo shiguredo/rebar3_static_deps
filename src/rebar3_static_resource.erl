@@ -8,7 +8,7 @@
          needs_update/2,
          make_vsn/2]).
 
-init(Type, State) ->
+init(Type, _State) ->
     rebar_api:warn("rebar3_static_resource:init(): Type=~p", [Type]),
     Resource = rebar_resource_v2:new(Type, ?MODULE, #{}),
     {ok, Resource}.
