@@ -10,7 +10,7 @@
 
 init(Type, State) ->
     rebar_api:warn("rebar3_static_resource:init(): Type=~p", [Type]),
-    rebar_git_resource:init(Type, State).
+    rebar_git_resource:init(to_normal_type(Type), State).
 
 lock(AppInfo, ResourceState) ->
     rebar_git_resource:lock(AppInfo, ResourceState).
@@ -38,6 +38,9 @@ make_vsn(AppInfo, ResourceState) ->
 
 to_normal_resource({static, Repo, Vsn}) ->
     {git, Repo, Vsn}.
+
+to_normal_type(static) ->
+    git.
 
 write_app_file(Dir, {_, Repo, _}) ->
     rebar_api:warn("rebar3_static_resource:write_app_file(): Dir=~p", [Dir]),
