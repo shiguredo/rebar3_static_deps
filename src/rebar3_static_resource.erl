@@ -37,6 +37,7 @@ write_app_file(Dir, {_, Repo, _}) ->
     rebar_api:warn("Dir=~p", [Dir]),
     AppName = lists:flatten(string:replace(filename:basename(Repo, ".git"), "-", "_", all)),
     AppFilePath = filename:join([Dir, "src", AppName ++ ".app.src"]),
+    rebar_api:warn("AppFilePath=~p", [AppFilePath]),
     ok = filelib:ensure_dir(AppFilePath),
     ok = file:write_file(AppFilePath, <<"{application, ", AppName, ",\n",
                                         "[{description, \"fake static app\"},\n",
