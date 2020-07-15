@@ -11,7 +11,7 @@ lock(Dir, Source) ->
     rebar_git_resource:lock(Dir, Source).
 
 download(Dir, Source, State) ->
-    rebar_api:debug("Source=~p", [Source]),
+    rebar_api:warn("Source=~p", [Source]),
     case rebar_git_resource:download(Dir, to_normal_resource(Source), State) of
         {error, Reason} ->
             {error, Reason};
@@ -32,6 +32,6 @@ to_normal_resource({static, Repo, Vsn}) ->
     {git, Repo, Vsn}.
 
 write_app_file(Dir) ->
-    rebar_api:debug("Dir=~p", [Dir]),
+    rebar_api:warn("Dir=~p", [Dir]),
     ok.
     %% AppFilePath = filename:join([Dir, "src", "").
