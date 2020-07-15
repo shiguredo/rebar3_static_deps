@@ -14,7 +14,7 @@ init(Type, State) ->
     {ok, Resource}.
 
 lock(AppInfo, ResourceState) ->
-    rebar_git_resource:lock(AppInfo, ResourceState).
+    rebar_git_resource:lock(to_internal_app_info(AppInfo), ResourceState).
 
 download(Dir, AppInfo, ResourceState, State) ->
     %% rebar_api:warn("rebar3_static_resource:download(): ResourceState=~p", [ResourceState]),
