@@ -1,0 +1,7 @@
+{application, rebar3_static_deps, [
+  {description, "Plugin to enable non-Erlang deps specification"},
+  {vsn, "0.0.1"},
+  {registered, []},
+  {applications, [kernel, stdlib]},
+  {env, []}
+]}.
