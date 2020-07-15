@@ -44,7 +44,7 @@ to_internal_app_info(AppInfo) ->
     rebar_app_info:source(AppInfo, {git, Url, Ref}).
 
 write_app_src_file(Dir, AppInfo) ->
-    rebar_api:dubug("rebar3_static_resource:write_app_file(): Dir=~p", [Dir]),
+    rebar_api:debug("rebar3_static_resource:write_app_file(): Dir=~p", [Dir]),
     AppName =  rebar_app_info:name(AppInfo),
     rebar_api:debug("rebar3_static_resource:write_app_file(): AppName=~p", [AppName]),
     AppFilePath = filename:join([Dir, "src", binary_to_list(AppName) ++ ".app.src"]),
