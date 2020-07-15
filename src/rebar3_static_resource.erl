@@ -12,7 +12,7 @@ lock(Dir, Source) ->
 
 download(Dir, Source, State) ->
     rebar_api:debug("Source=~p", [Source]),
-    case rebar_git_resource:download(Dir, Source, State) of
+    case rebar_git_resource:download(Dir, to_normal_resource(Source), State) of
         {error, Reason} ->
             {error, Reason};
         ok ->
@@ -21,10 +21,15 @@ download(Dir, Source, State) ->
 
 
 needs_update(Dir, Source) ->
-    rebar_git_resource:make_vsn(Dir, Source).
+    rebar_git_resource:make_vsn(Dir, to_normal_resource(Source)).
 
 make_vsn(Dir) ->
     rebar_git_resource:make_vsn(Dir).
+
+%% private
+
+to_normal_resource({static, Repo, Vsn}) ->
+    {git, Repo, Vsn}.
 
 write_app_file(Dir) ->
     rebar_api:debug("Dir=~p", [Dir]),
