@@ -22,10 +22,9 @@ download(Dir, AppInfo, ResourceState, State) ->
     case rebar_git_resource:download(Dir, to_internal_app_info(AppInfo), ResourceState, State) of
         {error, Reason} ->
             {error, Reason};
-        ok ->
-            write_app_file(Dir, AppInfo);
-        {ok, _} ->
-            write_app_file(Dir, AppInfo)
+        {ok, _} = Res ->
+            ok = write_app_file(Dir, AppInfo),
+            Res
     end.
 
 
