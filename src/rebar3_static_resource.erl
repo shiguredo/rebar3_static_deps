@@ -44,7 +44,7 @@ write_app_file(Dir, {_, Repo, _}) ->
                 "   {vsn, \"0.1.0\"},\n",
                 "   {registered, []},\n",
                 "   {applications, [kernel, stdlib]},\n",
-                "   {modules, []}]}">>,
+                "   {modules, []}]}.">>,
     rebar_api:warn("AppFile content=~p", [Content]),
     ok = file:write_file(AppFilePath, Content),
     ok.
