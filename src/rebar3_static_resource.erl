@@ -45,7 +45,7 @@ write_app_file(Dir, AppInfo) ->
     rebar_api:warn("rebar3_static_resource:write_app_file(): Dir=~p", [Dir]),
     AppName =  rebar_app_info:name(AppInfo),
     rebar_api:warn("rebar3_static_resource:write_app_file(): AppName=~p", [AppName]),
-    AppFilePath = filename:join([Dir, "src", AppName ++ ".app.src"]),
+    AppFilePath = filename:join([Dir, "src", binary_to_list(AppName) ++ ".app.src"]),
     rebar_api:warn("rebar3_static_resource:write_app_file(): AppFilePath=~p", [AppFilePath]),
     ok = filelib:ensure_dir(AppFilePath),
     Content = <<"{application, ", (iolist_to_binary(AppName))/binary, ",\n",
