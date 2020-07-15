@@ -8,7 +8,7 @@
          make_vsn/1]).
 
 lock(Dir, Source) ->
-    rebar_git_resource:lock(Dir, Source).
+    rebar_git_resource:lock(Dir, to_normal_resource(Source)).
 
 download(Dir, Source, State) ->
     rebar_api:warn("Source=~p", [Source]),
