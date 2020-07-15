@@ -7,13 +7,11 @@
          needs_update/2,
          make_vsn/1]).
 
--include("rebar.hrl").
-
 lock(Dir, Source) ->
     rebar_git_resource:lock(Dir, Source).
 
 download(Dir, Source, State) ->
-    ?DEBUG("Source=~p", [Source]),
+    rebar_api:debug("Source=~p", [Source]),
     case rebar_git_resource:download(Dir, Source, State) of
         {error, Reason} ->
             {error, Reason};
@@ -29,6 +27,6 @@ make_vsn(Dir) ->
     rebar_git_resource:make_vsn(Dir).
 
 write_app_file(Dir) ->
-    ?DEBUG("Dir=~p", [Dir]),
+    rebar_api:debug("Dir=~p", [Dir]),
     ok.
     %% AppFilePath = filename:join([Dir, "src", "").
