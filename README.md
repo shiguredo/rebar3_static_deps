@@ -5,7 +5,7 @@ A rebar3 plugin to enable a non-Erlang deps specification.
 ```
 {plugins,
  [
-  {rebar3_static_deps, {git, "git://github.com/shino/rebar3_static_deps.git", {tag, "0.0.1"}}}
+  {rebar3_static_deps, {git, "git://github.com/shino/rebar3_static_deps.git", {tag, "0.1.1"}}}
  ]}.
 ```
 
