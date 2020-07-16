@@ -1,0 +1,11 @@
+# CHANGES
+
+## develop
+
+## 0.1.0
+
+- [UPDATE] Use git tag for app vsn
+
+## 0.0.1
+
+- [ADD] Initial Release

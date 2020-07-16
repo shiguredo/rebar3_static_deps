@@ -52,7 +52,7 @@ write_app_src_file(Dir, AppInfo) ->
     ok = filelib:ensure_dir(AppFilePath),
     Content = <<"{application, ", (iolist_to_binary(AppName))/binary, ",\n",
                 "  [{description, \"fake static app\"},\n",
-                "   {vsn, \"0.1.0\"},\n",
+                "   {vsn, git},\n",
                 "   {registered, []},\n",
                 "   {applications, [kernel, stdlib]},\n",
                 "   {modules, []}]}.\n">>,
